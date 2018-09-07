@@ -1,0 +1,53 @@
+{
+	"manifest_version": 2,
+	"name": "syncAccount",
+	"version": "1.0",
+	"description": "网站自动登录插件",
+	"icons": {
+		"19": "images/logo.png",
+		"38": "images/logo.png",
+		"128": "images/logo128.png"
+	},
+
+	"browser_action": {
+		"default_title": "快速登录各种网站",
+		"default_popup": "popup.html"
+	},
+
+	"content_scripts": [
+		{
+			"matches": ["*://segmentfault.com/*"],
+			"js": ["./dist/content_scripts/segmentfault.min.js"]
+		}, 
+		{
+			"matches": ["*://github.com/login*"],
+			"js": ["./dist/content_scripts/github.min.js"]
+		}, 
+		{
+			"matches": ["*://mp.weixin.qq.com/"],
+			"js": ["./src/content_scripts/mp.js"]
+		},
+		{
+			"matches": ["*://*.taobao.com/*"],
+			"js": ["./dist/content_scripts/jquery-3.3.1.min.js","./dist/content_scripts/tb.js"]
+		}
+	],
+	"permissions":[
+		"contextMenus", // 右键菜单
+		"alarms", // 定时器
+		"tabs", // 标签
+		"notifications", // 通知
+		"webRequest", // web请求
+		"webRequestBlocking", // 阻塞式web请求
+		"storage", // 插件本地存储
+		"http://*/*", // 可以通过executeScript或者insertCSS访问的网站
+		"https://*/*", // 可以通过executeScript或者insertCSS访问的网站
+		"declarativeContent"
+	],
+	// 普通页面能够直接访问的插件资源列表，如果不设置是无法直接访问的
+    "web_accessible_resources": ["/dist/content_scripts/jquery-3.3.1.min.js"],
+
+	"background": {
+		"scripts": ["./background/background.js"]
+	}
+}
